@@ -1,0 +1,12 @@
+pypdf
+langchain
+langchain-community
+langchain-openai
+openai
+tiktoken
+flask
+pyyaml
+bs4
+requests
+beautifulsoup4
+tqdm

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask WebApp</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script defer src="static/script.js"></script>
+</head>
+<body>
+    <!-- Main Content -->
+    <div class="container">
+        <div id="left-container">
+            <div id="config-panel">
+                <button id="settingsBtn" class="settings-icon">
+                    <i class="fas fa-cog"></i> 
+                </button>
+                <div id="settingsModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeSettingsModal">&times;</span>
+                        <h2>Settings</h2>
+                        <div id="settingsContent"></div>
+                        <div class="modal-footer">
+                            <button id="restore-defaults" class="settings-button secondary">Restore default settings</button>
+                            <button id="save-settings" class="settings-button primary">Save custom settings</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="config-row">
+                    <label for="num-questions">Number of questions:</label>
+                    <input type="text" id="num-questions" value="4">
+                </div>
+                <div class="config-row">
+                    <label for="num-choices">Number of choices :</label>
+                    <input type="text" id="num-choices" value="4">
+                </div>
+                <div class="config-row">
+                    <label for="generate-flashcards">Generate flashcards :</label>
+                    <input type="checkbox" id="generate-flashcards">
+                </div>
+                <div class="config-row">
+                    <label for="data-source">Data source :</label>
+                    <select id="data-source-selector">
+                        <option value="text-content">Text Content</option>
+                        <option value="url">Web Page</option>
+                        <option value="youtube-url">Youtube video</option>
+                        <option value="pdf-file">PDF File</option>
+                        <option value="video-file">Video File</option>
+                    </select>
+                </div>
+                <div class="generate-quiz-container">
+                    <button id="generate-quiz">Generate Quiz</button>
+                    <div id="loader" class="loader"></div>
+                </div>                
+            </div>
+            <textarea id="text-content" placeholder="Copy text here..."></textarea>
+            <textarea id="url" placeholder="Copy URL here..."></textarea>
+            <textarea id="youtube-url" placeholder="Copy Youtube URL here..."></textarea>
+            <input type="file" id="pdf-file">
+            <input type="file" id="video-file">
+        </div>
+        <!-- Right Side: Question Box -->
+        <div class="question-box">
+            <button id="infoBtn" class="info-button">
+                <i class="fas fa-info-circle"></i>
+            </button>                
+            <div id="infoModal" class="modal">
+                <div class="modal-content">
+                    <span id="closeModal" class="close">&times;</span>
+                    <pre id="infoContent"></pre>
+                </div>
+            </div>
+            <div class="nav-buttons">
+                <button id="prev" class="nav-button"></button>
+                <span id="question-counter"></span>
+                <button id="next" class="nav-button"></button>
+            </div>
+            <div id="error-message" class="error-box" style="display: none;"></div>
+            <h3 id="question-text"></h2>
+            <div id="choices"></div>
+            <span id="explanation"></span>
+        </div>
+    </div>
+</body>
+</html>

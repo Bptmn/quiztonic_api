@@ -1,0 +1,465 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Main Layout */
+.container {
+    display: flex;
+    width: 80%;
+    height: 80vh;
+    margin-top: 60px;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Left side (Configuration Panel + Text Area) */
+#left-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+
+/* Config Panel: Vertical Layout */
+#config-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Push the button to the bottom */
+    height: 150px; /* Fixed height */
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Form Rows: Label + Input in One Row */
+.config-row {
+    display: flex;
+    align-items: center; /* Ensures vertical alignment */
+    gap: 10px; /* Reduces space between label and input */
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+/* Labels */
+.config-row label {
+    font-size: 14px;
+    font-weight: bold;
+    flex-shrink: 0; /* Prevents label from shrinking */
+}
+
+/* Inputs */
+.config-row input {
+    width: 30px; /* Slightly wider */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.config-row select {
+    width: 150px; /* Slightly wider */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+}
+
+/* Generate Quiz Button: Bottom Right */
+#generate-quiz {
+    align-self: flex-end; /* Push to the right */
+    background-color: #158eeb;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px; /* Slightly larger text */
+    border-radius: 5px;
+}
+
+/* Text Area */
+#text-content {
+    flex-grow: 1; /* Takes all remaining space */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    resize: none;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: block;
+}
+
+#url {
+    height: 40px; /* Takes all remaining space */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    resize: none;
+    align-items: center;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: none;
+}
+
+#youtube-url {
+    height: 40px; /* Takes all remaining space */
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    resize: none;
+    align-items: center;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: none;
+}
+
+
+#pdf-file {
+    height: 40px; /* Takes all remaining space */
+    width: 200px;
+    padding: 10px;
+    resize: none;
+    display: none;
+}
+
+#video-file {
+    height: 40px; /* Takes all remaining space */
+    width: 200px;
+    padding: 10px;
+    resize: none;
+    display: none;
+}
+
+/* Right Side: Question Box */
+.question-box {
+    flex: 1;
+    max-width: 45%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #f9f9f9;
+    height: 100%;
+    overflow-y: auto;
+    position:relative;
+}
+
+/* Choice Buttons */
+/* Default button style */
+.choice-btn {
+    position: relative;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px 0;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    background: rgb(227, 226, 226); /* Default color */
+    color: rgb(59, 59, 59);
+    font-size: 16px;
+    text-align: left;
+}
+
+.explain-btn {
+    position: absolute;
+    right: 5px;
+    background: none;
+    border: none;
+    color: rgb(124, 196, 124); /* Makes it stand out */
+    font-size: 22px;
+    cursor: pointer;
+    margin-left: auto; /* Pushes it to the right */
+    padding: 5px;
+}
+
+.explain-btn:focus {
+    outline: none;
+}
+
+.explain-btn:hover {
+    color: rgb(124, 196, 124);
+    transform: scale(1.2); /* Slightly enlarge on hover */
+    transition: transform 0.2s ease-in-out;
+}
+
+.choice-btn:not(:disabled):hover {
+    opacity: 0.8;
+}
+
+.choice-btn:disabled {
+    pointer-events: none;
+}
+
+.choice-btn:disabled .explain-btn {
+    pointer-events: auto; /* Re-enables interaction */
+}
+
+#explanation {
+    display: inline-block;
+    text-justify: auto;
+    padding: 12px;
+    font-size: 16px;
+    color: #787878;
+}
+
+/* Correct answer style */
+.correct {
+    background-color: rgb(132, 215, 132) !important;  /* Light Green */
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Wrong answer style */
+.wrong {
+    background-color: rgb(240, 127, 127) !important;  /* Light Red */
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+/* Animation for sliding effect */
+.slide-out {
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.slide-in {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+}
+    
+
+/* Question Counter */
+#question-counter {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(59, 59, 59);
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 10px;
+}
+
+.nav-button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgb(227, 226, 226);
+    color: rgb(255, 255, 255);
+    /*transition: all 0.3s ease-in-out;*/
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: relative;
+    display: none;
+}
+
+/* Navigation Buttons Container */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+/* Disabled navigation buttons */
+.nav-button:disabled {
+    pointer-events: none;
+    background-color: #ccc !important;
+    color: #ffffff !important;
+    opacity: 0.15;
+}
+
+/* Left Arrow */
+.nav-button#prev::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-left: 3px solid white;
+    border-bottom: 3px solid white;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Right Arrow */
+.nav-button#next::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Hover Effects */
+.nav-button:not(:disabled):hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.nav-button:active {
+    transform: scale(0.95);
+}
+
+.loader {
+    visibility: hidden;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #3498db; /* Blue spinner */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none;
+}
+
+/* Info button */
+.info-button {
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    padding: 5px;
+    color: #acacac;
+    cursor: pointer;
+}
+
+.info-button:hover {
+    color: #8f8c8c;
+    transform: scale(1.2); /* Slightly enlarge on hover */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Modal background (covers entire screen) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4); /* Semi-transparent black */
+    z-index: 1000; /* Above everything */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Centered modal box with same size as .question-box */
+.modal-content {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-out;
+    max-width: 45%; /* Matches .question-box */
+    width: 100%;
+    height: 80vh;
+    overflow-y: auto;
+    flex-direction: column;
+    overflow: hidden; /* Prevents double scroll */
+    position: relative;
+    display: flex;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 0 0;
+    border-top: 1px solid #ddd; /* Optional separator */
+}
+
+#settingsContent {
+    flex-grow: 1;
+    overflow-y: auto; /* Enables scrolling if content overflows */
+    padding-bottom: 10px; /* Space before the footer */
+}
+
+/* Close button (styled better) */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #555;
+}
+
+.close:hover {
+    color: black;
+}
+
+.error-box {
+    background-color: rgba(245, 52, 52, 0.8); /* Red with slight transparency */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Space before the question box */
+    display: none; /* Hidden by default */
+}
+
+/* Settings Icon */
+.settings-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #acacac;
+}
+
+.settings-icon:hover {
+    color: #8f8c8c;
+}
+
+.settings-button {
+    padding: 8px 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.settings-button.primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.settings-button.secondary {
+    background-color: #f8f9fa;
+    color: black;
+    border: 1px solid #ccc;
+}
+
+.settings-button:hover {
+    opacity: 0.8;
+}
+
